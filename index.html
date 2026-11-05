@@ -124,6 +124,17 @@
   .pub[hidden], .year[hidden] { display: none; }
   .note { color: var(--muted); font-size: .88rem; margin-top: 28px; }
 
+  /* Featured preprint */
+  .featured { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: var(--radius); padding: 24px 26px; margin: 0 0 32px; box-shadow: var(--shadow); }
+  .featured .eyebrow { margin-bottom: 10px; }
+  .featured h3 { font-size: 1.3rem; margin-bottom: 8px; }
+  .featured h3 a { text-decoration: none; }
+  .featured h3 a:hover { text-decoration: underline; }
+  .featured .meta { color: var(--muted); font-size: .92rem; margin-bottom: 12px; }
+  .featured .meta b { color: var(--ink); background: var(--accent-soft); padding: 0 3px; border-radius: 3px; font-weight: 600; }
+  .featured p:last-child { margin-bottom: 0; }
+  .badge { display: inline-block; font: 600 .72rem/1 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--warm); border: 1px solid var(--warm); border-radius: 999px; padding: 4px 9px; margin-left: 6px; vertical-align: middle; white-space: nowrap; }
+
   /* Lists */
   .cols { display: grid; grid-template-columns: repeat(2, 1fr); gap: 36px; }
   @media (max-width: 760px) { .cols { grid-template-columns: 1fr; } }
@@ -230,7 +241,7 @@
       <article class="card">
         <span class="num">01</span>
         <h3>Machine learning for flow cytometry</h3>
-        <p>Gate-free classification of B-cell malignancies using UMAP and random forests, comparative studies of published algorithms, and DinoFlow, a self-supervised transformer pretrained on 52,625 clinical samples to detect common hematologic disorders.</p>
+        <p>Gate-free classification of B-cell malignancies using UMAP and random forests, comparative studies of published algorithms, DinoFlow, a self-supervised transformer pretrained on 52,625 clinical samples to detect common hematologic disorders, and EventHorizon, a foundation model pretrained on 100,937 specimens whose frozen embeddings support many downstream diagnostic tasks (preprint).</p>
       </article>
       <article class="card">
         <span class="num">02</span>
@@ -255,8 +266,16 @@
 <section id="publications">
   <div class="wrap">
     <div class="eyebrow">Publications</div>
-    <h2>Selected peer-reviewed work</h2>
+    <h2>Selected publications</h2>
     <p class="lead">A selection from my CV, newest first. DOI links are included where the record was confirmed in PubMed. For a complete, current list, see <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Ng+DP%5BAuthor%5D+AND+Utah%5BAffiliation%5D&amp;sort=date" rel="noopener">my PubMed results</a>.</p>
+
+    <aside class="featured" aria-label="Featured preprint">
+      <div class="eyebrow">Featured preprint</div>
+      <h3><a href="https://www.biorxiv.org/content/10.64898/2026.06.18.733197v2" rel="noopener">EventHorizon: A Foundation Model for Clinical Flow Cytometry</a></h3>
+      <p class="meta">Grespan MM, Morrison M, O&rsquo;Fallon B, Jacobsen JR, Shean RC, Spies NC, <b>Ng D</b> (corresponding author). bioRxiv, 2026 (v2). <span class="badge">Preprint, not peer reviewed</span></p>
+      <p>A self-supervised foundation model for clinical flow cytometry, pretrained without labels on 100,937 routine clinical specimens (over 50 billion cells) with a hierarchical, marker-aware transformer and self-distillation. Frozen embeddings with lightweight classifiers identified AML genetic abnormalities including t(15;17) (AUROC 0.991) and DDX41 mutations (AUROC 0.970), and reached a macro AUROC of 0.970 across 28 diagnoses in a temporally separated 2026 cohort. The model also transferred zero-shot to a five-site B-cell lymphoma cohort and the FlowCAP-II AML challenge. Decision thresholds shift across sites but recalibrate with as few as four labeled AML cases, and sensitivity falls below 0.1% disease burden.</p>
+      <p><a href="https://www.biorxiv.org/content/10.64898/2026.06.18.733197v2" rel="noopener">Read the preprint on bioRxiv</a></p>
+    </aside>
 
     <div class="filters" role="group" aria-label="Filter publications by topic">
       <button class="chip" data-filter="all" aria-pressed="true">All</button>
@@ -269,6 +288,7 @@
     <div id="pubList">
       <h3 class="year" data-year="2026">2026</h3>
       <ol class="pubs">
+        <li class="pub" data-year="2026" data-tags="ml flow">Grespan MM, Morrison M, O&rsquo;Fallon B, Jacobsen JR, Shean RC, Spies NC, <b>Ng D</b>. <span class="t">EventHorizon: A foundation model for clinical flow cytometry.</span> <span class="j">bioRxiv. 2026 (v2). doi:10.64898/2026.06.18.733197.</span> <span class="badge">Preprint</span> <a class="doi" href="https://www.biorxiv.org/content/10.64898/2026.06.18.733197v2" rel="noopener">bioRxiv</a></li>
         <li class="pub" data-year="2026" data-tags="ml flow">O&rsquo;Fallon B, Morrison M, Grespan MM, Spies NC, <b>Ng DP</b>. <span class="t">DinoFlow: Self-supervised pretraining in flow cytometry enables accurate detection of common hematopathological disorders.</span> <span class="j">Cytometry B Clin Cytom. 2026;110(5):347&ndash;358.</span> <a class="doi" href="https://doi.org/10.1002/cyto.b.70043" rel="noopener">DOI</a></li>
         <li class="pub" data-year="2026" data-tags="flow heme">Shean RC, Davis P, Jacobsen J, <b>Ng DP</b>. <span class="t">COMIP-002: 27-color flow cytometry for measurable residual disease detection in B-cell lymphoblastic leukemia.</span> <span class="j">Cytometry B Clin Cytom. 2026;110(5):321&ndash;325.</span> <a class="doi" href="https://doi.org/10.1002/cyto.b.70044" rel="noopener">DOI</a></li>
         <li class="pub" data-year="2026" data-tags="flow heme">Shean RC, George TI, <b>Ng DP</b>. <span class="t">Characterization of CD123 expression by mast cells in systemic mastocytosis with multicolor flow cytometry.</span> <span class="j">Cytometry B Clin Cytom. 2026;110(5):326&ndash;334.</span> <a class="doi" href="https://doi.org/10.1002/cyto.b.70023" rel="noopener">DOI</a></li>
@@ -325,7 +345,7 @@
       </ol>
     </div>
     <p class="note" id="emptyNote" hidden>No publications match this filter.</p>
-    <p class="note">Bibliographic data checked against PubMed; DOI links resolve through doi.org. Author names in bold mark my position in each author list.</p>
+    <p class="note">Bibliographic data checked against PubMed; DOI links resolve through doi.org. The EventHorizon preprint is listed from bioRxiv. Author names in bold mark my position in each author list.</p>
   </div>
 </section>
 
