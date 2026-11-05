@@ -1,7 +1,483 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>David P. Ng, MD, FCAP | Hematopathology, Flow Cytometry &amp; Clinical AI</title>
+<meta name="description" content="David P. Ng, MD, FCAP — hematopathologist, clinical flow cytometrist, and director of applied artificial intelligence at ARUP Laboratories. Associate Professor (Clinical) of Pathology, University of Utah.">
+<style>
+  :root {
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --ink: #14202b;
+    --muted: #5a6772;
+    --line: #dcdad2;
+    --accent: #0f6e72;
+    --accent-ink: #ffffff;
+    --accent-soft: #e2f0f0;
+    --warm: #a4491f;
+    --shadow: 0 1px 2px rgba(20,32,43,.06), 0 8px 24px rgba(20,32,43,.05);
+    --radius: 14px;
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e151b;
+      --surface: #151e26;
+      --ink: #e8edf1;
+      --muted: #9aa8b3;
+      --line: #26323c;
+      --accent: #4fc3c8;
+      --accent-ink: #08181a;
+      --accent-soft: #12292c;
+      --warm: #e08a5f;
+      --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 17px/1.65 var(--sans); -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { text-decoration-thickness: 2px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.2; margin: 0; }
+  h2 { font-size: 2rem; margin-bottom: 8px; }
+  h3 { font-size: 1.15rem; }
+  p { margin: 0 0 1em; }
+  .eyebrow { font: 600 .78rem/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .lead { color: var(--muted); max-width: 62ch; margin-bottom: 36px; }
+
+  /* Nav */
+  header.site {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+  .brand { font: 600 1.05rem var(--serif); color: var(--ink); text-decoration: none; }
+  .nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; }
+  .nav a.link { color: var(--muted); text-decoration: none; font-size: .92rem; font-weight: 500; }
+  .nav a.link:hover, .nav a.link:focus-visible { color: var(--ink); }
+  .menu-btn { display: none; background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 8px; padding: 6px 12px; font: inherit; font-size: .9rem; }
+  @media (max-width: 760px) {
+    .menu-btn { display: block; }
+    .nav ul { display: none; position: absolute; top: 62px; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: 8px 24px 14px; }
+    .nav ul.open { display: flex; }
+    .nav ul li a { display: block; padding: 10px 0; }
+  }
+
+  /* Hero */
+  .hero { padding: 84px 0 64px; }
+  .hero-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; align-items: center; }
+  @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; gap: 36px; } .hero { padding-top: 52px; } }
+  .hero h1 { font-size: clamp(2.4rem, 5.4vw, 3.8rem); letter-spacing: -.02em; margin-bottom: 8px; }
+  .hero h1 span { color: var(--muted); font-weight: 400; font-size: .55em; letter-spacing: 0; }
+  .role { font: 500 1.2rem/1.5 var(--serif); color: var(--accent); margin-bottom: 18px; }
+  .hero p.intro { color: var(--muted); max-width: 54ch; font-size: 1.05rem; }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+  .btn { display: inline-block; padding: 11px 20px; border-radius: 999px; font-weight: 600; font-size: .95rem; text-decoration: none; border: 1.5px solid var(--accent); }
+  .btn.primary { background: var(--accent); color: var(--accent-ink); }
+  .btn.ghost { color: var(--accent); }
+  .btn:hover { filter: brightness(1.08); }
+  .glance { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); }
+  .glance h3 { font-size: .8rem; font-family: var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .glance dl { margin: 0; }
+  .glance dt { font-weight: 600; font-size: .95rem; margin-top: 14px; }
+  .glance dt:first-of-type { margin-top: 0; }
+  .glance dd { margin: 2px 0 0; color: var(--muted); font-size: .92rem; line-height: 1.5; }
+
+  section { padding: 72px 0; border-top: 1px solid var(--line); }
+
+  /* Cards */
+  .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .cards { grid-template-columns: 1fr; } }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); }
+  .card h3 { margin-bottom: 8px; }
+  .card p { color: var(--muted); font-size: .96rem; margin: 0; }
+  .card .num { font: 600 .8rem var(--sans); color: var(--warm); letter-spacing: .1em; display: block; margin-bottom: 10px; }
+
+  /* About */
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
+  @media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; gap: 28px; } }
+  .timeline { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--line); }
+  .timeline li { position: relative; padding: 0 0 20px 22px; }
+  .timeline li::before { content: ""; position: absolute; left: -7px; top: 8px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+  .timeline .when { font: 600 .8rem var(--sans); color: var(--muted); letter-spacing: .05em; }
+  .timeline .what { font-weight: 600; line-height: 1.4; }
+  .timeline .where { color: var(--muted); font-size: .92rem; }
+
+  /* Publications */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .chip { background: var(--surface); border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 7px 16px; font: 500 .88rem var(--sans); cursor: pointer; }
+  .chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .year { font: 600 .85rem var(--sans); letter-spacing: .12em; color: var(--warm); margin: 32px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  ol.pubs { list-style: none; margin: 0; padding: 0; }
+  .pub { padding: 14px 0; border-bottom: 1px dashed var(--line); font-size: .95rem; line-height: 1.55; }
+  .pub .t { font-weight: 600; }
+  .pub .j { color: var(--muted); }
+  .pub b { color: var(--ink); background: var(--accent-soft); padding: 0 3px; border-radius: 3px; font-weight: 600; }
+  .pub .doi { white-space: nowrap; font-size: .85rem; margin-left: 4px; }
+  .pub[hidden], .year[hidden] { display: none; }
+  .note { color: var(--muted); font-size: .88rem; margin-top: 28px; }
+
+  /* Lists */
+  .cols { display: grid; grid-template-columns: repeat(2, 1fr); gap: 36px; }
+  @media (max-width: 760px) { .cols { grid-template-columns: 1fr; } }
+  .cols h3 { margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); display: inline-block; }
+  ul.plain { list-style: none; padding: 0; margin: 0 0 8px; }
+  ul.plain li { padding: 8px 0; border-bottom: 1px dashed var(--line); font-size: .95rem; line-height: 1.5; }
+  ul.plain li small { display: block; color: var(--muted); font-size: .85rem; }
+
+  /* Contact */
+  .contact { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 34px; box-shadow: var(--shadow); display: grid; grid-template-columns: 1.2fr 1fr; gap: 36px; }
+  @media (max-width: 760px) { .contact { grid-template-columns: 1fr; padding: 26px; } }
+  .contact ul { list-style: none; margin: 0; padding: 0; }
+  .contact li { padding: 6px 0; }
+
+  footer { border-top: 1px solid var(--line); padding: 34px 0 48px; color: var(--muted); font-size: .85rem; }
+  footer p { margin: 0 0 8px; max-width: 80ch; }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  @media print { header.site, .filters, .btns { display: none; } section { padding: 24px 0; } body { font-size: 12pt; } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="#top">David P. Ng, MD</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navList">Menu</button>
+    <ul id="navList">
+      <li><a class="link" href="#about">About</a></li>
+      <li><a class="link" href="#research">Research</a></li>
+      <li><a class="link" href="#publications">Publications</a></li>
+      <li><a class="link" href="#teaching">Teaching</a></li>
+      <li><a class="link" href="#service">Service &amp; Talks</a></li>
+      <li><a class="link" href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Hematopathology &middot; Flow Cytometry &middot; Clinical AI</div>
+      <h1>David P. Ng <span>MD, BSEE, FCAP</span></h1>
+      <div class="role">Associate Professor (Clinical) of Pathology, University of Utah<br>Medical Director &amp; Director of Applied AI, ARUP Laboratories</div>
+      <p class="intro">I am a board-certified hematopathologist and engineer. My work brings machine learning and software engineering into the clinical flow cytometry laboratory, with an emphasis on getting validated models out of the notebook and into routine patient care.</p>
+      <div class="btns">
+        <a class="btn primary" href="#publications">Selected publications</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+    <aside class="glance" aria-label="At a glance">
+      <h3>At a glance</h3>
+      <dl>
+        <dt>Academic appointment</dt>
+        <dd>Associate Professor (Clinical), Department of Pathology, University of Utah (since 2024; faculty since 2019)</dd>
+        <dt>ARUP Laboratories</dt>
+        <dd>Medical Director: Hematopathology, Hematologic Flow Cytometry, and Applied AI &amp; Bioinformatics</dd>
+        <dt>AI program</dt>
+        <dd>Leads a team of 6 data scientists and 4 software developers at the ARUP Institute for Research and Innovation in Diagnostic and Precision Medicine</dd>
+        <dt>Board certification</dt>
+        <dd>American Board of Pathology: Anatomic &amp; Clinical Pathology; Hematology</dd>
+      </dl>
+    </aside>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <div class="eyebrow">About</div>
+      <h2>Clinician, engineer, builder</h2>
+      <p class="lead" style="margin-bottom:20px">Trained in electrical engineering before medicine, and still working at that intersection.</p>
+      <p>I practice hematopathology at ARUP Laboratories, a national reference laboratory and nonprofit enterprise of the University of Utah and its Department of Pathology, where I direct hematologic flow cytometry and attend on the flow cytometry service. I also direct the Applied Artificial Intelligence group in the ARUP Institute for Research and Innovation.</p>
+      <p>My research asks how computation can make clinical flow cytometry faster, more reproducible, and more sensitive: automated case triage and diagnosis, self-supervised representation learning on large clinical datasets, real-time model deployment with monitoring, and high-parameter spectral panels for measurable residual disease (MRD).</p>
+      <p>I teach residents, fellows, technologists, and practicing pathologists through a lecture series on clinical flow cytometry, the flow cytometry rotation at ARUP, and courses for the International Clinical Cytometry Society (ICCS).</p>
+    </div>
+    <div>
+      <div class="eyebrow">Training &amp; appointments</div>
+      <ul class="timeline">
+        <li><div class="when">2024 &ndash; present</div><div class="what">Associate Professor (Clinical), Pathology</div><div class="where">University of Utah</div></li>
+        <li><div class="when">2019 &ndash; present</div><div class="what">Medical Director, Hematopathology (2019); Hematologic Flow Cytometry (2020); Applied AI &amp; Bioinformatics (2023)</div><div class="where">ARUP Laboratories, Salt Lake City</div></li>
+        <li><div class="when">2015 &ndash; 2019</div><div class="what">Hematopathologist; Associate Director of Flow Cytometry (2017)</div><div class="where">PhenoPath Laboratories, Seattle</div></li>
+        <li><div class="when">2013 &ndash; 2015</div><div class="what">Senior Fellow, Hematopathology</div><div class="where">University of Washington</div></li>
+        <li><div class="when">2009 &ndash; 2013</div><div class="what">Residency, Anatomic &amp; Clinical Pathology</div><div class="where">Dartmouth-Hitchcock Medical Center</div></li>
+        <li><div class="when">2005 &ndash; 2009</div><div class="what">M.D.</div><div class="where">University of Illinois at Chicago College of Medicine</div></li>
+        <li><div class="when">2001 &ndash; 2005</div><div class="what">B.S., Electrical Engineering (minors: Bioengineering, Chemistry)</div><div class="where">University of Illinois at Urbana-Champaign</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="wrap">
+    <div class="eyebrow">Research</div>
+    <h2>Four threads of work</h2>
+    <p class="lead">Each starts from a problem in the clinical laboratory and ends, where possible, in a validated tool that runs in production.</p>
+    <div class="cards">
+      <article class="card">
+        <span class="num">01</span>
+        <h3>Machine learning for flow cytometry</h3>
+        <p>Gate-free classification of B-cell malignancies using UMAP and random forests, comparative studies of published algorithms, and DinoFlow, a self-supervised transformer pretrained on 52,625 clinical samples to detect common hematologic disorders.</p>
+      </article>
+      <article class="card">
+        <span class="num">02</span>
+        <h3>Deploying AI in the clinical laboratory</h3>
+        <p>Cloud inference, reproducible workflows, structured data extraction from reports, and ongoing model monitoring, including a real-time AML detection system. Related work includes guidance on validation and performance metrics, and computer vision for acid-fast bacilli and Castleman disease histology.</p>
+      </article>
+      <article class="card">
+        <span class="num">03</span>
+        <h3>MRD and high-parameter cytometry</h3>
+        <p>Flow cytometric MRD in myeloma, CLL, and B-lymphoblastic leukemia; comparisons of flow with FISH; 25- to 37-marker spectral panels for lymphoid neoplasms and 27-color MRD for B-ALL; and study chair for SWOG S1925 (venetoclax and obinutuzumab in early high-risk CLL/SLL).</p>
+      </article>
+      <article class="card">
+        <span class="num">04</span>
+        <h3>Quality, controls, and diagnostic stewardship</h3>
+        <p>Synthetic cell particles as controls for rare populations such as mast cells, CD123 in systemic mastocytosis, patient-based quality control and delta checks for BCR-ABL1, and reflex myeloma FISH driven by flow MRD results to avoid uninformative testing.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="wrap">
+    <div class="eyebrow">Publications</div>
+    <h2>Selected peer-reviewed work</h2>
+    <p class="lead">A selection from my CV, newest first. DOI links are included where the record was confirmed in PubMed. For a complete, current list, see <a href="https://pubmed.ncbi.nlm.nih.gov/?term=Ng+DP%5BAuthor%5D+AND+Utah%5BAffiliation%5D&amp;sort=date" rel="noopener">my PubMed results</a>.</p>
+
+    <div class="filters" role="group" aria-label="Filter publications by topic">
+      <button class="chip" data-filter="all" aria-pressed="true">All</button>
+      <button class="chip" data-filter="ml" aria-pressed="false">Machine learning &amp; AI</button>
+      <button class="chip" data-filter="flow" aria-pressed="false">Flow cytometry &amp; MRD</button>
+      <button class="chip" data-filter="heme" aria-pressed="false">Hematopathology</button>
+      <button class="chip" data-filter="lab" aria-pressed="false">Laboratory medicine &amp; QC</button>
+    </div>
+
+    <div id="pubList">
+      <h3 class="year" data-year="2026">2026</h3>
+      <ol class="pubs">
+        <li class="pub" data-year="2026" data-tags="ml flow">O&rsquo;Fallon B, Morrison M, Grespan MM, Spies NC, <b>Ng DP</b>. <span class="t">DinoFlow: Self-supervised pretraining in flow cytometry enables accurate detection of common hematopathological disorders.</span> <span class="j">Cytometry B Clin Cytom. 2026;110(5):347&ndash;358.</span> <a class="doi" href="https://doi.org/10.1002/cyto.b.70043" rel="noopener">DOI</a></li>
+        <li class="pub" data-year="2026" data-tags="flow heme">Shean RC, Davis P, Jacobsen J, <b>Ng DP</b>. <span class="t">COMIP-002: 27-color flow cytometry for measurable residual disease detection in B-cell lymphoblastic leukemia.</span> <span class="j">Cytometry B Clin Cytom. 2026;110(5):321&ndash;325.</span> <a class="doi" href="https://doi.org/10.1002/cyto.b.70044" rel="noopener">DOI</a></li>
+        <li class="pub" data-year="2026" data-tags="flow heme">Shean RC, George TI, <b>Ng DP</b>. <span class="t">Characterization of CD123 expression by mast cells in systemic mastocytosis with multicolor flow cytometry.</span> <span class="j">Cytometry B Clin Cytom. 2026;110(5):326&ndash;334.</span> <a class="doi" href="https://doi.org/10.1002/cyto.b.70023" rel="noopener">DOI</a></li>
+        <li class="pub" data-year="2026" data-tags="ml heme">Morrison MJ, Alnoor, O&rsquo;Fallon B, Hutchings A, Dewey M, English P, et al., <b>Ng DP</b>, Ohgami RS. <span class="t">Grading of Castleman disease histopathology with an attention-based multiple instance learning model.</span> <span class="j">Diagnostics (Basel). 2026;16(17).</span> <a class="doi" href="https://doi.org/10.3390/diagnostics16172750" rel="noopener">DOI</a></li>
+        <li class="pub" data-year="2026" data-tags="ml heme">Alnoor F, Mukherjee S, Menon MP, <b>Ng D</b>, Li P, Ohgami RS. <span class="t">Molecular pathology, artificial intelligence, and new technologies in hematologic diagnostics: translational opportunities and practical considerations.</span> <span class="j">Diagnostics (Basel). 2026;16(6). Review.</span></li>
+        <li class="pub" data-year="2026" data-tags="heme">Kirtek TJ, Chen W, Harris JC, et al., <b>Ng DP</b>, George TI, et al., Weinberg OK. <span class="t">Acute leukemias of ambiguous lineage with RUNX1 mutations show similar prognosis compared to acute myeloid leukemia with RUNX1 mutations: a study from the Bone Marrow Pathology Group.</span> <span class="j">Am J Hematol. 2026;101(1):70&ndash;78.</span> <a class="doi" href="https://doi.org/10.1002/ajh.70116" rel="noopener">DOI</a></li>
+      </ol>
+
+      <h3 class="year" data-year="2025">2025</h3>
+      <ol class="pubs">
+        <li class="pub" data-year="2025" data-tags="ml flow">Zuromski LM, Durtschi J, Aziz A, Chumley J, Dewey M, English P, Morrison M, Simmon K, Whipple B, O&rsquo;Fallon B, <b>Ng DP</b>. <span class="t">Clinical validation of a real-time machine learning-based system for the detection of acute myeloid leukemia by flow cytometry.</span> <span class="j">Cytometry B Clin Cytom. 2025;108(5):392&ndash;403.</span> <a class="doi" href="https://doi.org/10.1002/cyto.b.22229" rel="noopener">DOI</a></li>
+        <li class="pub" data-year="2025" data-tags="ml flow">Spies NC, Rangel A, English P, Morrison M, O&rsquo;Fallon B, <b>Ng DP</b>. <span class="t">Machine learning methods in clinical flow cytometry.</span> <span class="j">Cancers (Basel). 2025;17(3):483.</span> <a class="doi" href="https://doi.org/10.3390/cancers17030483" rel="noopener">DOI</a></li>
+        <li class="pub" data-year="2025" data-tags="ml lab">Spies NC, <b>Ng DP</b>. <span class="t">Performance metrics for machine learning solutions in laboratory medicine.</span> <span class="j">Lab Med. 2025;56(6):597&ndash;607.</span> <a class="doi" href="https://doi.org/10.1093/labmed/lmaf013" rel="noopener">DOI</a></li>
+        <li class="pub" data-year="2025" data-tags="ml lab">English P, Morrison MJ, Mathison B, Enrico E, Shean R, O&rsquo;Fallon B, Rupp D, Knight K, Rangel A, Gilivary J, Vance A, Hatch H, Lin L, <b>Ng DP</b>, Shakir SM. <span class="t">Use of a convolutional neural network for direct detection of acid-fast bacilli from clinical specimens.</span> <span class="j">Microbiol Spectr. 2025;13(8):e0060225.</span> <a class="doi" href="https://doi.org/10.1128/spectrum.00602-25" rel="noopener">DOI</a></li>
+        <li class="pub" data-year="2025" data-tags="heme">Alnoor F, Spies NC, Kumar J, Samghabadi P, Silva O, Luo MX, Chisholm KM, Zhang J, Rangel A, <b>Ng D</b>, Li P, Ohgami RS. <span class="t">The evolution and recent advances in diagnostic criteria for idiopathic multicentric Castleman disease.</span> <span class="j">Am J Hematol. 2025;100(11):2064&ndash;2073. Review.</span></li>
+        <li class="pub" data-year="2025" data-tags="lab flow">Ravkov EV, Ventura MF, Gudipaty S, <b>Ng D</b>, Delgado JC, Lin L. <span class="t">Converting an HLA-B27 flow assay from the BD FACSCanto to the BD FACSLyric.</span> <span class="j">Cytometry B Clin Cytom. 2025;108(1):67&ndash;76.</span></li>
+      </ol>
+
+      <h3 class="year" data-year="2024">2024</h3>
+      <ol class="pubs">
+        <li class="pub" data-year="2024" data-tags="ml flow"><b>Ng DP</b>, Simonson PD, Tarnok A, Lucas F, Kern W, Rolf N, Bogdanoski G, Green C, Brinkman RR, Czechowska K. <span class="t">Recommendations for using artificial intelligence in clinical flow cytometry.</span> <span class="j">Cytometry B Clin Cytom. 2024;106(4):228&ndash;238.</span> <a class="doi" href="https://doi.org/10.1002/cyto.b.22166" rel="noopener">DOI</a></li>
+        <li class="pub" data-year="2024" data-tags="ml flow">Dinalankara W, <b>Ng DP</b>, Marchionni L, Simonson PD. <span class="t">Comparison of three machine learning algorithms for classification of B-cell neoplasms using clinical flow cytometry data.</span> <span class="j">Cytometry B Clin Cytom. 2024;106(4):282&ndash;293.</span> <a class="doi" href="https://doi.org/10.1002/cyto.b.22177" rel="noopener">DOI</a></li>
+        <li class="pub" data-year="2024" data-tags="flow lab">Davis PM, Ravkov E, de Geus M, Clauss Z, Lee J, Nguyen AT, Hartmann M, Kim J, George TI, Lin L, <b>Ng DP</b>. <span class="t">Synthetic abnormal mast cell particles successfully mimic neoplastic mast cells by flow cytometry.</span> <span class="j">Cytometry B Clin Cytom. 2024;106(6):437&ndash;447.</span> <a class="doi" href="https://doi.org/10.1002/cyto.b.22183" rel="noopener">DOI</a></li>
+        <li class="pub" data-year="2024" data-tags="flow heme">Dadelahi A, Jackson T, Agarwal AM, Lin L, Rets AV, <b>Ng DP</b>. <span class="t">Applications of flow cytometry in diagnosis and evaluation of red blood cell disorders.</span> <span class="j">Clin Lab Med. 2024;44(3):495&ndash;509. Review.</span> <a class="doi" href="https://doi.org/10.1016/j.cll.2024.04.010" rel="noopener">DOI</a></li>
+      </ol>
+
+      <h3 class="year" data-year="2023">2023</h3>
+      <ol class="pubs">
+        <li class="pub" data-year="2023" data-tags="heme">Vander Mause ER, Baker JM, Dietze KA, Radhakrishnan SV, Iraguha T, Omili D, Davis P, et al., <b>Ng DP</b>, Lim CS, Atanackovic D, Luetkens T. <span class="t">Systematic single amino acid affinity tuning of CD229 CAR T cells retains efficacy against multiple myeloma and eliminates on-target off-tumor toxicity.</span> <span class="j">Sci Transl Med. 2023;15(705):eadd7900.</span> <a class="doi" href="https://doi.org/10.1126/scitranslmed.add7900" rel="noopener">DOI</a></li>
+      </ol>
+
+      <h3 class="year" data-year="2022">2022</h3>
+      <ol class="pubs">
+        <li class="pub" data-year="2022" data-tags="lab"><b>Ng DP</b>, Karner KH. <span class="t">BCR-ABL1 (p210) transcript kinetics.</span> <span class="j">Arch Pathol Lab Med. 2022;146(9):1140&ndash;1143.</span> <a class="doi" href="https://doi.org/10.5858/arpa.2021-0121-OA" rel="noopener">DOI</a></li>
+      </ol>
+
+      <h3 class="year" data-year="2021">2021</h3>
+      <ol class="pubs">
+        <li class="pub" data-year="2021" data-tags="ml flow"><b>Ng DP</b>, Zuromski LM. <span class="t">Augmented human intelligence and automated diagnosis in flow cytometry for hematologic malignancies.</span> <span class="j">Am J Clin Pathol. 2021;155(4):597&ndash;605.</span> <a class="doi" href="https://doi.org/10.1093/ajcp/aqaa166" rel="noopener">DOI</a></li>
+        <li class="pub" data-year="2021" data-tags="flow"><b>Ng DP</b>. <span class="t">Flow cytometric myeloma measurable residual disease testing in the era of targeted therapies.</span> <span class="j">Int J Lab Hematol. 2021;43(Suppl 1):71&ndash;77.</span> <a class="doi" href="https://doi.org/10.1111/ijlh.13587" rel="noopener">DOI</a></li>
+        <li class="pub" data-year="2021" data-tags="flow"><b>Ng DP</b>, Miles RR, Andersen EF, Toydemir RM. <span class="t">Flow cytometry is more sensitive than fluorescence in situ hybridization for detecting minimal residual disease.</span> <span class="j">Am J Clin Pathol. 2021;156(4):715&ndash;716. Letter.</span> <a class="doi" href="https://doi.org/10.1093/ajcp/aqab080" rel="noopener">DOI</a></li>
+      </ol>
+
+      <h3 class="year" data-year="2020">2020</h3>
+      <ol class="pubs">
+        <li class="pub" data-year="2020" data-tags="lab"><b>Ng DP</b>, Herman DS. <span class="t">How to implement patient-based quality control: trial and error.</span> <span class="j">J Appl Lab Med. 2020;5(6):1153&ndash;1155. Editorial.</span> <a class="doi" href="https://doi.org/10.1093/jalm/jfaa132" rel="noopener">DOI</a></li>
+      </ol>
+
+      <h3 class="year" data-year="2018">2015 &ndash; 2018</h3>
+      <ol class="pubs">
+        <li class="pub" data-year="2018" data-tags="heme">Yeung CCS, McElhone S, Chen XY, <b>Ng D</b>, Storer BE, Deeg HJ, Fang M. <span class="t">Impact of copy neutral loss of heterozygosity and total genome aberrations on survival in myelodysplastic syndrome.</span> <span class="j">Mod Pathol. 2018;31(4):569&ndash;580.</span></li>
+        <li class="pub" data-year="2018" data-tags="ml lab"><b>Ng D</b>, Polito FA, Cervinski MA. <span class="t">Optimization of a moving averages program using a simulated annealing algorithm: the goal is to monitor the process not the patients.</span> <span class="j">Clin Chem. 2016;62(10):1361&ndash;1371.</span></li>
+        <li class="pub" data-year="2018" data-tags="ml flow"><b>Ng DP</b>, Wu D, Wood BL, Fromm JR. <span class="t">Computer-aided detection of rare tumor populations in flow cytometry: an example with classic Hodgkin lymphoma.</span> <span class="j">Am J Clin Pathol. 2015;144(3):517&ndash;524.</span></li>
+      </ol>
+    </div>
+    <p class="note" id="emptyNote" hidden>No publications match this filter.</p>
+    <p class="note">Bibliographic data checked against PubMed; DOI links resolve through doi.org. Author names in bold mark my position in each author list.</p>
+  </div>
+</section>
+
+<!-- TEACHING -->
+<section id="teaching">
+  <div class="wrap">
+    <div class="eyebrow">Teaching &amp; Education</div>
+    <h2>Teaching clinical flow cytometry</h2>
+    <p class="lead">From first-week gating fundamentals to AI in the laboratory, for trainees, technologists, and practicing pathologists.</p>
+    <div class="cols">
+      <div>
+        <h3>Courses &amp; clinical teaching</h3>
+        <ul class="plain">
+          <li>Director, Hematologic Flow Cytometry Rotation, ARUP Laboratories<small>2020 &ndash; present</small></li>
+          <li>Attending, Flow Cytometry Service, ARUP Laboratories<small>2019 &ndash; present; resident teaching on service</small></li>
+          <li>Instructor, Practical Course in Clinical Cytometry, International Clinical Cytometry Society<small>2024 &middot; three-day course with hands-on sessions</small></li>
+          <li>Lecturer, MD ID 7700 Advanced Integrated Science, &ldquo;AI in clinical laboratory practice&rdquo;<small>University of Utah, 2025 &ndash; present</small></li>
+          <li>Course Director, ARUP Institute for Learning<small>2020 &ndash; present; lecture submission and review</small></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Lecture series &amp; continuing education</h3>
+        <ul class="plain">
+          <li>Clinical Flow Cytometry for the Perplexed, Parts 1&ndash;5<small>Gating &bull; Technical considerations &bull; Lymphomas &bull; Leukemias and myeloid neoplasms &bull; MRD</small></li>
+          <li>Flow Cytometry in Clinical Practice: Pitfalls, Advances, and Opportunities<small>ARUP Institute for Learning</small></li>
+          <li>CLL/SLL: Update and Other Things You Should Know<small>ARUP Institute for Learning webinar</small></li>
+          <li>Machine Learning, Neural Networks, and Artificial Intelligence: What Does It All Mean?<small>ARUP Laboratories</small></li>
+          <li>Faster, Cheaper, Better: Spectral Flow Cytometry in the Clinical Laboratory<small>Technology spotlight, <i>The Hematologist</i>, 2025</small></li>
+        </ul>
+        <p style="margin-top:14px"><a href="https://arup.utah.edu/education/" rel="noopener">Browse ARUP educational lectures</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE & TALKS -->
+<section id="service">
+  <div class="wrap">
+    <div class="eyebrow">Service, Honors &amp; Talks</div>
+    <h2>Beyond the bench</h2>
+    <div class="cols">
+      <div>
+        <h3>Professional service</h3>
+        <ul class="plain">
+          <li>Member, College of American Pathologists Diagnostic Immunology and Flow Cytometry Committee<small>2022 &ndash; 2028</small></li>
+          <li>Member, CLSI H43 Revision Committee<small>2024 &ndash; present</small></li>
+          <li>Chair, ICCS Q&amp;A subcommittee (2021&ndash;present); member, ICCS Education Committee<small>Q&amp;A subcommittee and Education Committee member since 2018</small></li>
+          <li>Planning committee, ICCS annual meetings<small>Montreal 2022; New Orleans 2023</small></li>
+          <li>Laboratory inspector, College of American Pathologists<small>2012 &ndash; present</small></li>
+          <li>Study Chair, SWOG S1925 (EVOLVE CLL/SLL)<small>2020 &ndash; present</small></li>
+          <li>Ad hoc reviewer: <i>Am J Clin Pathol</i>, <i>Lab Medicine</i>, <i>Modern Pathology</i>, <i>Int J Lab Hematol</i></li>
+          <li>University of Utah: Academic Senate Credits and Admissions Committee (2023&ndash;2026); Pathology Residency Selection Committee (2020&ndash;present)</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Honors &amp; recognition</h3>
+        <ul class="plain">
+          <li>Janis Giorgi Young Investigator Award<small>International Clinical Cytometry Society, 2014</small></li>
+          <li>Paul E. Strandjord Young Investigator Award<small>Academy of Clinical Laboratory Physicians and Scientists, 2013 and 2014</small></li>
+          <li>Rippey Grant for Laboratory Quality Assurance<small>College of American Pathologists Foundation, 2014&ndash;2015; real-time flow cytometry QA/QC system</small></li>
+          <li>Fellow, College of American Pathologists</li>
+        </ul>
+        <h3 style="margin-top:28px">Selected invited talks</h3>
+        <ul class="plain">
+          <li>Clinical implementation of AI in the flow laboratory: crossing the implementation gap<small>Keynote, CYTO 2025, Denver</small></li>
+          <li>Bringing machine learning to the clinical flow cytometry laboratory<small>Australasian Cytometry Society, 2023</small></li>
+          <li>Artificial intelligence and the future of computational flow cytometry<small>New England Cytometry Society, 2023</small></li>
+          <li>Please mind the gap: bridging the implementation chasm in laboratory AI<small>Pathology Grand Rounds, Oregon Health &amp; Science University, 2024</small></li>
+          <li>BCR-ABL1 transcript kinetics: a rational basis for delta checks<small>Grand Rounds, National University of Singapore, 2023</small></li>
+        </ul>
+      </div>
+    </div>
+    <h3 style="margin:36px 0 12px">Intellectual property</h3>
+    <ul class="plain">
+      <li>Prediction of cell population size, fraction, and ratios by machine learning methods on flow cytometry data<small>Published patent application, April 2026</small></li>
+    </ul>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="eyebrow">Contact</div>
+    <h2>Let&rsquo;s talk</h2>
+    <p class="lead">I welcome conversations about clinical AI implementation, flow cytometry method development, collaboration, and training opportunities.</p>
+    <div class="contact">
+      <div>
+        <h3 style="margin-bottom:10px">David P. Ng, MD, FCAP</h3>
+        <p style="color:var(--muted)">Department of Pathology, University of Utah<br>ARUP Laboratories<br>Salt Lake City, Utah</p>
+        <p><a href="mailto:david.ng@aruplab.com">david.ng@aruplab.com</a></p>
+      </div>
+      <div>
+        <ul>
+          <li><a href="https://aruplab.com/experts/ng" rel="noopener">ARUP Laboratories expert profile</a></li>
+          <li><a href="https://healthcare.utah.edu/find-a-doctor/david-p-ng" rel="noopener">University of Utah Health provider profile</a></li>
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/?term=Ng+DP%5BAuthor%5D+AND+Utah%5BAffiliation%5D&amp;sort=date" rel="noopener">PubMed publications</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>&copy; <span id="yr">2026</span> David P. Ng. The views expressed on this page are my own and do not represent the official positions of the University of Utah or ARUP Laboratories. This site does not provide medical advice or patient consultation.</p>
+    <p>Publication metadata sourced from PubMed (National Library of Medicine) and the author&rsquo;s curriculum vitae.</p>
+  </div>
+</footer>
+
+<script>
+  // Year
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Mobile menu
+  var btn = document.getElementById('menuBtn');
+  var list = document.getElementById('navList');
+  btn.addEventListener('click', function () {
+    var open = list.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  list.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') { list.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+  });
+
+  // Publication filters
+  var chips = document.querySelectorAll('.chip');
+  var pubs = document.querySelectorAll('.pub');
+  var years = document.querySelectorAll('h3.year');
+  var empty = document.getElementById('emptyNote');
+
+  function applyFilter(f) {
+    var shown = 0;
+    pubs.forEach(function (p) {
+      var match = f === 'all' || p.dataset.tags.split(' ').indexOf(f) !== -1;
+      p.hidden = !match;
+      if (match) shown++;
+    });
+    years.forEach(function (h) {
+      var any = Array.prototype.some.call(pubs, function (p) { return p.dataset.year === h.dataset.year && !p.hidden; });
+      h.hidden = !any;
+    });
+    empty.hidden = shown !== 0;
+  }
+  chips.forEach(function (c) {
+    c.addEventListener('click', function () {
+      chips.forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+      c.setAttribute('aria-pressed', 'true');
+      applyFilter(c.dataset.filter);
+    });
+  });
+</script>
 </body>
 </html>
